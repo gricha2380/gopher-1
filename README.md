@@ -9,4 +9,3 @@ import "github.com/danielkvist/gopher
 ```
 
 > I will add support for go modules in the future.
-
