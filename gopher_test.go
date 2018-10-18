@@ -17,29 +17,24 @@ func TestTalk(t *testing.T) {
 		want   string
 	}{
 		{
-
 			msg:    "Concurrency is not parallelism",
 			scream: new(bool),
 			want:   "Concurrency is not parallelism",
 		},
 		{
-
 			want:   "WHAT AM I SUPPOSED TO SAY?",
 			scream: testScream,
 		},
 		{
-
 			want:   "What am I supposed to say?",
 			scream: new(bool),
 		},
 		{
-
 			msg:    "Make the zero value useful",
 			scream: new(bool),
 			want:   "Make the zero value useful",
 		},
 		{
-
 			msg:    "Don't panic!",
 			scream: testScream,
 			want:   "DON'T PANIC!",

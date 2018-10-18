@@ -5,13 +5,11 @@ import (
 	"fmt"
 	"io"
 	"strings"
-	"sync"
 )
 
 // Talk writes a dialog at the specified writer.
 // If the upper *bool its true it writes the message in uppercase.
 func Talk(msg string, upper *bool, out io.Writer) {
-
 	// ASCII art of the Go project's pet.
 	ASCIIart := []string{
 		"                        dhyysoo++++ooossyhd",
@@ -32,18 +30,7 @@ func Talk(msg string, upper *bool, out io.Writer) {
 		"    /######################:+  ::  :/#######################+",
 		"    +#######################+//++//+########################+",
 	}
-	gopher := &ASCIIart
 
-	var g string
-	var w sync.WaitGroup
-
-	w.Add(1)
-	go func() {
-		defer w.Done()
-		g = strings.Join(*gopher, "\n")
-	}()
-
-	dialog := make([]string, 0, 5)
 	ml := len(msg)
 
 	if ml <= 0 {
@@ -55,13 +42,10 @@ func Talk(msg string, upper *bool, out io.Writer) {
 		msg = strings.ToUpper(msg)
 	}
 
-	dialog = append(dialog, fmt.Sprintf(" %s\n/ %s /\n %[1]s\n", strings.Repeat("~", ml+2), msg))
+	io.WriteString(out, fmt.Sprintf(" %s\n/ %s /\n %[1]s\n", strings.Repeat("~", ml+2), msg))
 	for i := 0; i < 3; i++ {
-		dialog = append(dialog, fmt.Sprintf("%s%s\n", strings.Repeat(" ", (ml/3)+(i*2)), strings.Repeat("#", 3-i)))
+		io.WriteString(out, fmt.Sprintf("%s%s\n", strings.Repeat(" ", (ml/3)+(i*2)), strings.Repeat("#", 3-i)))
 	}
 
-	w.Wait()
-	dialog = append(dialog, g)
-
-	io.WriteString(out, strings.Join(dialog, ""))
+	io.WriteString(out, strings.Join(ASCIIart, "\n"))
 }
